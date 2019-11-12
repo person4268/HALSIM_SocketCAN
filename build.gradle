@@ -2,10 +2,10 @@
 plugins {
   id 'cpp'
   id 'java'
-  id 'edu.wpi.first.wpilib.repositories.WPILibRepositoriesPlugin' version '2020.1'
-  id 'edu.wpi.first.NativeUtils' version '2020.4.1'
-  id 'edu.wpi.first.GradleJni' version '0.9.1'
-  id 'edu.wpi.first.GradleVsCode' version '0.9.6'
+  id 'edu.wpi.first.wpilib.repositories.WPILibRepositoriesPlugin' version '2020.2'
+  id 'edu.wpi.first.NativeUtils' version '2020.5.1'
+  id 'edu.wpi.first.GradleJni' version '0.10.1'
+  id 'edu.wpi.first.GradleVsCode' version '0.10.0'
 }
 
 repositories {
@@ -22,8 +22,8 @@ apply from: 'config.gradle'
 
 // Apply Java configuration
 dependencies {
-    compile 'edu.wpi.first.wpiutil:wpiutil-java:2019.+'
-    compile 'edu.wpi.first.hal:hal-java:2019.+'
+    implementation 'edu.wpi.first.wpiutil:wpiutil-java:2019.+'
+    implementation 'edu.wpi.first.hal:hal-java:2019.+'
 }
 
 // Set up exports properly
@@ -32,6 +32,7 @@ nativeUtils {
     // Only export explicit symbols from driver library
     HALSIM_SocketCAN {
       exportsFile = project.file("src/main/driver/symbols.txt")
+      performStripAllSymbols = true
     }
   }
 }
@@ -64,5 +65,5 @@ model {
 apply from: 'publish.gradle'
 
 wrapper {
-  gradleVersion '5.4.1'
+  gradleVersion '6.0'
 }

@@ -76,7 +76,8 @@ int CANController::start(const wpi::Twine& port) {
 
   m_socket = soc;
 
-
+  m_running = true;
+  
   m_incomingThread = std::thread(&CANController::readThreadMain, this);
 
   m_outgoingThread = std::thread(&CANController::writeThreadMain, this);
@@ -113,7 +114,6 @@ void CANController::putData(const CANData& data) {
 }
 
 void CANController::writeThreadMain() {
-
   while (m_running) {
     auto data = m_outgoing.pop();
     if (!m_running) {
@@ -132,7 +132,6 @@ void CANController::writeThreadMain() {
     m_totalBits += can_frame_length((struct canfd_frame*)&frame,
                       CFL_WORSTCASE, sizeof(frame));
   }
-
 }
 
 void CANController::readThreadMain() {
@@ -199,7 +198,7 @@ void CANController::readThreadMain() {
               }
           }
       }
-
+      
   }
 }
 

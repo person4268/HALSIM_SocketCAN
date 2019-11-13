@@ -77,7 +77,7 @@ int CANController::start(const wpi::Twine& port) {
   m_socket = soc;
 
   m_running = true;
-  
+
   m_incomingThread = std::thread(&CANController::readThreadMain, this);
 
   m_outgoingThread = std::thread(&CANController::writeThreadMain, this);
@@ -99,7 +99,7 @@ void CANController::stop() {
 
 std::optional<CANData> CANController::getData(uint32_t idFilter, uint32_t idMask) {
   std::lock_guard lock(m_dataMutex);
-  for (auto&& message : m_dataMap)  {
+  for (auto& message : m_dataMap)  {
     if (message.valid && (message.id & idMask) == idFilter) {
       auto copy = message;
       message.valid = false;
@@ -180,7 +180,7 @@ void CANController::readThreadMain() {
                     std::lock_guard lock(m_dataMutex);
                     bool placed = false;
                     for (auto& message : m_dataMap) {
-                      if (!message.valid) {
+                      if (message.id == newData.id) {
                         message = newData;
                         placed = true;
                         break;

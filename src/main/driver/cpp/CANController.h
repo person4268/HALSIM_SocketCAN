@@ -26,15 +26,15 @@ public:
 
   int getUtilPercent() { return m_utilPercent;}
 private:
-  void writeThreadMain();
+  //void writeThreadMain();
   void readThreadMain();
   void utilThreadMain();
 
 
   std::atomic_bool m_running;
-  wpi::ConcurrentQueue<CANData> m_outgoing;
+  //wpi::ConcurrentQueue<CANData> m_outgoing;
   std::thread m_incomingThread;
-  std::thread m_outgoingThread;
+  //std::thread m_outgoingThread;
   std::thread m_utilThread;
   int m_socket {-1};
 

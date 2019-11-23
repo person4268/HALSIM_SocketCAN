@@ -3,7 +3,7 @@ plugins {
   id 'cpp'
   id 'java'
   id 'edu.wpi.first.wpilib.repositories.WPILibRepositoriesPlugin' version '2020.2'
-  id 'edu.wpi.first.NativeUtils' version '2020.5.1'
+  id 'edu.wpi.first.NativeUtils' version '2020.6.1'
   id 'edu.wpi.first.GradleJni' version '0.10.1'
   id 'edu.wpi.first.GradleVsCode' version '0.10.0'
 }
@@ -22,8 +22,8 @@ apply from: 'config.gradle'
 
 // Apply Java configuration
 dependencies {
-    implementation 'edu.wpi.first.wpiutil:wpiutil-java:2019.+'
-    implementation 'edu.wpi.first.hal:hal-java:2019.+'
+    implementation 'edu.wpi.first.wpiutil:wpiutil-java:2020.+'
+    implementation 'edu.wpi.first.hal:hal-java:2020.+'
 }
 
 // Set up exports properly

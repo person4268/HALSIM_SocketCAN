@@ -59,6 +59,20 @@ model {
 
        nativeUtils.useRequiredLibrary(it, "driver_shared")
     }
+    TestExe(NativeExecutableSpec) {
+      sources {
+        cpp {
+          source {
+            srcDirs 'src/main/exe/cpp'
+          }
+        }
+      }
+
+      binaries.all {
+        lib library: 'HALSIM_SocketCAN', linkage: 'shared'
+        nativeUtils.useRequiredLibrary(it, 'driver_shared')
+      }
+    }
   }
 }
 

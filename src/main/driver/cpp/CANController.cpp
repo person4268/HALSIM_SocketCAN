@@ -80,8 +80,6 @@ int CANController::start(const wpi::Twine& port) {
 
   m_incomingThread = std::thread(&CANController::readThreadMain, this);
 
-  m_outgoingThread = std::thread(&CANController::writeThreadMain, this);
-
   m_utilThread = std::thread(&CANController::utilThreadMain, this);
 
   return 0;
@@ -89,11 +87,8 @@ int CANController::start(const wpi::Twine& port) {
 
 void CANController::stop() {
   m_running = false;
-  CANData data;
-  m_outgoing.emplace(data);
 
   if (m_incomingThread.joinable()) m_incomingThread.join();
-  if (m_outgoingThread.joinable()) m_outgoingThread.join();
   if (m_utilThread.joinable()) m_utilThread.join();
 }
 
@@ -110,28 +105,18 @@ std::optional<CANData> CANController::getData(uint32_t idFilter, uint32_t idMask
 }
 
 void CANController::putData(const CANData& data) {
-  m_outgoing.emplace(data);
-}
-
-void CANController::writeThreadMain() {
-  while (m_running) {
-    auto data = m_outgoing.pop();
-    if (!m_running) {
-      break;
-    }
-
-    can_frame frame;
+  can_frame frame;
     for (int i = 0; i < 8; i++) {
       frame.data[i] = data.data[i];
     }
     frame.can_id = data.id;
+    frame.can_id |= CAN_EFF_FLAG;
     frame.can_dlc = data.length;
 
     write(m_socket, &frame, sizeof(struct can_frame));
 
     m_totalBits += can_frame_length((struct canfd_frame*)&frame,
                       CFL_WORSTCASE, sizeof(frame));
-  }
 }
 
 void CANController::readThreadMain() {

@@ -22,6 +22,43 @@ in this repo
 
 Eventually there will be a proper maven sever...hopefully.
 
+# General running tips
+
+FRC non-FD buses (that is, everything except the CANivore) uses 1 Mbps CAN so to configure a SocketCAN interface on ``can0`` one might do:
+
+```bash
+sudo ip link set can0 type can bitrate 1000000 && sudo ip link set can0 up
+```
+to provision ``can0``
+
+# Running in C++
+
+Assuming the SocketCAN interface is ``can0`` -- consult your local ``ip link`` to be sure.
+
+```cpp
+#include <HALSIM_SocketCAN/HALSIM_SocketCAN.h>
+
+static HALSIM_SocketCAN_Handle handle;
+int main() {
+  // make sure that CAN-using objects are not instantiated first via static fields
+  handle = HALSIM_SocketCAN_Enable("can0");
+  return frc::StartRobot<Robot>();
+}
+```
+
+# Running in Java
+```java
+import halsim.socketcan.HALSIM_SocketCAN;
+
+@Override
+public void robotInit() {
+    HALSIM_SocketCAN.enable("can0"):
+    // rest of robot init here
+    // you can also use a static {} block
+}
+
+```
+
 
 ## Building and editing this vendordep
 This uses gradle, and uses the same base setup as a standard GradleRIO robot project. This means you build with `./gradlew build`, and can install the native toolchain with `./gradlew installRoboRIOToolchain`. If you open this project in VS Code with the wpilib extension installed, you will get intellisense set up for both C++ and Java.

@@ -6,7 +6,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import edu.wpi.first.util.RuntimeLoader;
 
 /**
+ * Binds the HAL CAN calls to a SocketCAN device when in simulation
  * 
+ * Example usage:
+ * <pre>
+ * // Say in ip link we have can0
+ * </pre>
  */
 public class HALSIM_SocketCAN {
   static boolean libraryLoaded = false;
@@ -53,7 +58,7 @@ public class HALSIM_SocketCAN {
   /**
    * Binds the WPILib HAL CAN sim system to the specified SocketCAN interface.
    * @param port The socketcan interface to bind to
-   * @return positive handle value on success, -1 on failure
+   * @return non-negative handle index on success, -1 on failure
    */
   public static native int enable(String port);
 

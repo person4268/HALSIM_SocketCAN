@@ -10,14 +10,14 @@
     "javaDependencies": [
         {
             "groupId": "halsim.socketcan",
-            "artifactId": "HALSIM_SocketCANLib-java",
+            "artifactId": "HALSIM_SocketCAN-java",
             "version": "0.0.1"
         }
     ],
     "jniDependencies": [
         {
             "groupId": "halsim.socketcan",
-            "artifactId": "HALSIM_SocketCAN",
+            "artifactId": "HALSIM_SocketCAN-driver",
             "version": "0.0.1",
             "skipInvalidPlatforms": true,
             "isJar": false,
@@ -32,22 +32,7 @@
     "cppDependencies": [
         {
             "groupId": "halsim.socketcan",
-            "artifactId": "HALSIM_SocketCANLib-cpp",
-            "version": "0.0.1",
-            "libName": "HALSIM_SocketCANLib",
-            "headerClassifier": "headers",
-            "sharedLibrary": false,
-            "skipInvalidPlatforms": true,
-            "binaryPlatforms": [
-                "linuxarm64",
-                "linuxx86-64",
-                "linuxathena",
-                "linuxarm32"
-            ]
-        },
-        {
-            "groupId": "com.vendor.frc",
-            "artifactId": "HALSIM_SocketCAN",
+            "artifactId": "HALSIM_SocketCAN-driver",
             "version": "0.0.1",
             "libName": "HALSIM_SocketCAN",
             "headerClassifier": "headers",

@@ -32,7 +32,7 @@ public class HALSIM_SocketCAN {
   static {
     if (Helper.getExtractOnStaticLoad()) {
       try {
-        loader = new RuntimeLoader<>("Vendor", RuntimeLoader.getDefaultExtractionRoot(), HALSIM_SocketCAN.class);
+        loader = new RuntimeLoader<>("HALSIM_SocketCAN", RuntimeLoader.getDefaultExtractionRoot(), HALSIM_SocketCAN.class);
         loader.loadLibrary();
       } catch (IOException ex) {
         ex.printStackTrace();
@@ -50,7 +50,7 @@ public class HALSIM_SocketCAN {
     if (libraryLoaded) {
       return;
     }
-    loader = new RuntimeLoader<>("VendorJNI", RuntimeLoader.getDefaultExtractionRoot(), HALSIM_SocketCAN.class);
+    loader = new RuntimeLoader<>("HALSIM_SocketCAN", RuntimeLoader.getDefaultExtractionRoot(), HALSIM_SocketCAN.class);
     loader.loadLibrary();
     libraryLoaded = true;
   }

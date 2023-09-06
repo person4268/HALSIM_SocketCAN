@@ -5,7 +5,7 @@
 #include <optional>
 #include <mutex>
 #include <vector>
-#include <wpi/ConcurrentQueue.h>
+//#include <wpi/ConcurrentQueue.h>
 
 struct CANData {
   uint64_t timestamp;
@@ -41,7 +41,7 @@ private:
 
   std::atomic_int m_totalBits {0};
 
-  wpi::mutex m_dataMutex;
+  std::mutex m_dataMutex;
   std::vector<CANData> m_dataMap;
 
 };

@@ -36,12 +36,12 @@ to provision ``can0``
 Assuming the SocketCAN interface is ``can0`` -- consult your local ``ip link`` to be sure.
 
 ```cpp
-#include <HALSIM_SocketCAN/HALSIM_SocketCAN.h>
+#include <HALSIM_SocketCAN.h>
 
-static HALSIM_SocketCAN_Handle handle;
 int main() {
   // make sure that CAN-using objects are not instantiated first via static fields
-  handle = HALSIM_SocketCAN_Enable("can0");
+  HAL_Initialize(500, 0);
+  HALSIM_SocketCAN_Enable("can0");
   return frc::StartRobot<Robot>();
 }
 ```
@@ -50,13 +50,15 @@ int main() {
 ```java
 import halsim.socketcan.HALSIM_SocketCAN;
 
-@Override
-public void robotInit() {
-    HALSIM_SocketCAN.enable("can0"):
-    // rest of robot init here
-    // you can also use a static {} block
-}
+// edit your Main.java as such:
 
+public static void main(String... args) {
+if (!HAL.initialize(500, 0)) {
+    throw new IllegalStateException("Failed to initialize. Terminating");
+}
+HALSIM_SocketCAN.enable("can0");
+RobotBase.startRobot(Robot::new);
+}
 ```
 
 

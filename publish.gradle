@@ -169,17 +169,17 @@ model {
         def driverTaskList = createComponentZipTasks($.components, ['HALSIM_SocketCAN'], driverZipBaseName, Zip, project, includeStandardZipFormat)
 
         publications {
-            cpp(MavenPublication) {
-                taskList.each {
-                    artifact it
-                }
-                artifact cppHeadersZip
-                artifact cppSourceZip
+            //cpp(MavenPublication) {
+            //    taskList.each {
+            //        artifact it
+            //    }
+            //    artifact cppHeadersZip
+            //    artifact cppSourceZip
 
-                artifactId = "${baseArtifactId}-cpp"
-                groupId artifactGroupId
-                version pubVersion
-            }
+            //    artifactId = "${baseArtifactId}-cpp"
+            //    groupId artifactGroupId
+            //    version pubVersion
+            //}
             driver(MavenPublication) {
                 driverTaskList.each {
                     artifact it

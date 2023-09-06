@@ -96,7 +96,7 @@ void CANController::stop() {
 }
 
 std::optional<CANData> CANController::getData(uint32_t idFilter, uint32_t idMask) {
-  std::lock_guard lock(m_dataMutex);
+  std::lock_guard<std::mutex> lock(m_dataMutex);
   for (auto& message : m_dataMap)  {
     if (message.valid && (message.id & idMask) == idFilter) {
       auto copy = message;
@@ -166,7 +166,7 @@ void CANController::readThreadMain() {
                   newData.valid = true;
 
                   {
-                    std::lock_guard lock(m_dataMutex);
+                    std::lock_guard<std::mutex> lock(m_dataMutex);
                     bool placed = false;
                     for (auto& message : m_dataMap) {
                       if (message.id == newData.id) {

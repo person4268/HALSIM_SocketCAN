@@ -1,8 +1,7 @@
-#ifdef __linux__
 #include "HALSIM_SocketCAN.h"
 
+#ifdef __linux__
 #include "CANController.h"
-
 #include "hal/CAN.h"
 #include "hal/simulation/CanData.h"
 #include "hal/Errors.h"
@@ -173,4 +172,9 @@ extern "C"
         delete controller;
     }
 }
+#else
+
+// this isn't linux, so noop the entire library
+HALSIM_SocketCAN_Handle HALSIM_SocketCAN_Enable(const char* name) { return nullptr; };
+void HALSIM_SocketCAN_Clean(HALSIM_SocketCAN_Handle handle) {};
 #endif

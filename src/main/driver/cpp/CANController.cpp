@@ -117,6 +117,7 @@ void CANController::putData(const CANData& data) {
     frame.can_dlc = data.length;
 
     ssize_t res = write(m_socket, &frame, sizeof(struct can_frame));
+    (void) res; // we don't care if it fails tbh
 
     m_totalBits += can_frame_length((struct canfd_frame*)&frame,
                       CFL_WORSTCASE, sizeof(frame));

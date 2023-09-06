@@ -42,11 +42,11 @@ ext.addTaskToCopyAllOutputs = { task ->
     copyAllOutputs.from task.archivePath
 }
 
-def artifactGroupId = 'com.vendor.frc'
-def baseArtifactId = 'Vendor'
-def driverZipBaseName = "_GROUP_com_vendor_frc_ID_${baseArtifactId}-driver_CLS"
-def zipBaseName = "_GROUP_com_vendor_frc_ID_${baseArtifactId}-cpp_CLS"
-def javaBaseName = "_GROUP_com_vendor_frc_ID_${baseArtifactId}-java_CLS"
+def artifactGroupId = 'halsim.socketcan'
+def baseArtifactId = 'HALSIM_SocketCAN'
+def driverZipBaseName = "_GROUP_halsim_socketcan_ID_${baseArtifactId}-driver_CLS"
+def zipBaseName = "_GROUP_halsim_socketcan_ID_${baseArtifactId}-cpp_CLS"
+def javaBaseName = "_GROUP_halsim_socketcan_ID_${baseArtifactId}-java_CLS"
 
 task cppHeadersZip(type: Zip) {
     destinationDirectory = outputsFolder

@@ -1,16 +1,15 @@
 import org.gradle.internal.os.OperatingSystem
 
 nativeUtils.addWpiNativeUtils()
-nativeUtils.withRaspbian()
-nativeUtils.withBionic()
+nativeUtils.withCrossRoboRIO()
 
 nativeUtils {
   wpi {
     configureDependencies {
-      wpiVersion = "2020.+"
-      niLibVersion = "2020.5.2"
-      opencvVersion = "3.4.7-2"
-      googleTestVersion = "1.9.0-3-437e100"
+      wpiVersion = "2023.+"
+      niLibVersion = "2023.3.0"
+      opencvVersion = "4.6.0-3"
+      googleTestVersion = "1.12.1-1"
     }
   }
 }
@@ -21,6 +20,12 @@ nativeUtils.wpi.addWarningsAsErrors()
 nativeUtils.setSinglePrintPerPlatform()
 
 model {
+    // Uncomment this, and remove lines below it to enable builds for just roborio
+    // components {
+    //     all {
+    //         targetPlatform nativeUtils.wpi.platforms.roborio
+    //     }
+    // }
     components {
         all {
             nativeUtils.useAllPlatforms(it)
@@ -28,10 +33,6 @@ model {
     }
     binaries {
         withType(NativeBinarySpec).all {
-            if (it.targetPlatform.name == nativeUtils.wpi.platforms.windowsx64
-                || it.targetPlatform.name == nativeUtils.wpi.platforms.windowsx86) {
-                it.buildable = false
-            }
             nativeUtils.usePlatformArguments(it)
         }
     }

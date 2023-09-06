@@ -4,7 +4,7 @@ ext.licenseFile = files("$rootDir/LICENSE.txt")
 
 def pubVersion = '0.0.1'
 
-def outputsFolder = file("$buildDir/allOutputs")
+def outputsFolder = file("$buildDir/outputs")
 
 def versionFile = file("$outputsFolder/version.txt")
 
@@ -28,7 +28,9 @@ task libraryBuild() {}
 build.dependsOn outputVersions
 
 task copyAllOutputs(type: Copy) {
-    destinationDir outputsFolder
+    destinationDir file("$buildDir/allOutputs")
+    from versionFile
+    dependsOn outputVersions
 }
 
 build.dependsOn copyAllOutputs
@@ -46,16 +48,30 @@ def driverZipBaseName = "_GROUP_com_vendor_frc_ID_${baseArtifactId}-driver_CLS"
 def zipBaseName = "_GROUP_com_vendor_frc_ID_${baseArtifactId}-cpp_CLS"
 def javaBaseName = "_GROUP_com_vendor_frc_ID_${baseArtifactId}-java_CLS"
 
-task cppDriverSourceZip(type: Zip) {
+task cppHeadersZip(type: Zip) {
     destinationDirectory = outputsFolder
     archiveBaseName = zipBaseName
-    classifier = "source"
+    classifier = "headers"
 
     from(licenseFile) {
         into '/'
     }
 
-    from('src/main/driver/cpp') {
+    from('src/main/native/include') {
+        into '/'
+    }
+}
+
+task cppSourceZip(type: Zip) {
+    destinationDirectory = outputsFolder
+    archiveBaseName = zipBaseName
+    classifier = "sources"
+
+    from(licenseFile) {
+        into '/'
+    }
+
+    from('src/main/native/cpp') {
         into '/'
     }
 }
@@ -74,8 +90,10 @@ task cppDriverHeadersZip(type: Zip) {
     }
 }
 
-build.dependsOn cppDriverSourceZip
-addTaskToCopyAllOutputs(cppDriverSourceZip)
+build.dependsOn cppHeadersZip
+addTaskToCopyAllOutputs(cppHeadersZip)
+build.dependsOn cppSourceZip
+addTaskToCopyAllOutputs(cppSourceZip)
 build.dependsOn cppDriverHeadersZip
 addTaskToCopyAllOutputs(cppDriverHeadersZip)
 
@@ -146,15 +164,27 @@ tasks.matching {it != cleanReleaseRepo}.all {it.dependsOn cleanReleaseRepo}
 
 model {
     publishing {
-        def taskList = createComponentZipTasks($.components, ['HALSIM_SocketCAN'], zipBaseName, Zip, project, includeStandardZipFormat)
+        def taskList = createComponentZipTasks($.components, ['HALSIM_SocketCANLib'], zipBaseName, Zip, project, includeStandardZipFormat)
+
+        def driverTaskList = createComponentZipTasks($.components, ['HALSIM_SocketCAN'], driverZipBaseName, Zip, project, includeStandardZipFormat)
 
         publications {
-            driver(MavenPublication) {
+            cpp(MavenPublication) {
                 taskList.each {
                     artifact it
                 }
+                artifact cppHeadersZip
+                artifact cppSourceZip
+
+                artifactId = "${baseArtifactId}-cpp"
+                groupId artifactGroupId
+                version pubVersion
+            }
+            driver(MavenPublication) {
+                driverTaskList.each {
+                    artifact it
+                }
                 artifact cppDriverHeadersZip
-                artifact cppDriverSourceZip
 
                 artifactId = "${baseArtifactId}-driver"
                 groupId artifactGroupId

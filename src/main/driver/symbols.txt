@@ -1,5 +1,9 @@
 JNI_OnLoad
 JNI_OnUnload
 Java_com_vendor_jni_VendorJNI_initialize
+<<<<<<< HEAD
 HALSIM_SocketCAN_Enable
 HALSIM_SocketCAN_Clean
+=======
+c_doThing
+>>>>>>> de5bc7320b586f11b6a37ce6016d1f63c3a7fee0

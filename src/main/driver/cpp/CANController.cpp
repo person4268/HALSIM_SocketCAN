@@ -38,7 +38,7 @@ unsigned can_frame_length(struct canfd_frame *frame, enum cfl_mode mode, int mtu
 }
 
 
-int CANController::start(const wpi::Twine& port) {
+int CANController::start(const char* port) {
   if (m_socket != -1) return 0;
 
 
@@ -55,8 +55,10 @@ int CANController::start(const wpi::Twine& port) {
   }
 
   addr.can_family = AF_CAN;
-  wpi::SmallVector<char, 32> buf;
-  strcpy(ifr.ifr_name, port.toNullTerminatedStringRef(buf).data());
+  char buf[32];
+  buf[31] = '\0';
+  strncpy(buf, port, 31);
+  strcpy(ifr.ifr_name, buf);
 
   if (ioctl(soc, SIOCGIFINDEX, &ifr) < 0)
   {

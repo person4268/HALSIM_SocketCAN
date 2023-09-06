@@ -5,7 +5,6 @@
 #include <optional>
 #include <mutex>
 #include <vector>
-#include "wpi/Twine.h"
 #include <wpi/ConcurrentQueue.h>
 
 struct CANData {
@@ -19,7 +18,7 @@ struct CANData {
 
 class CANController {
 public:
-  int start(const wpi::Twine& port);
+  int start(const char* port);
   void stop();
   std::optional<CANData> getData(uint32_t idFilter, uint32_t idMask);
   void putData(const CANData& data);

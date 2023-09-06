@@ -3,7 +3,8 @@
 #include "CANController.h"
 
 #include "hal/CAN.h"
-#include "mockdata/CanData.h"
+#include "hal/simulation/CanData.h"
+#include <cstring>
 
 namespace
 {

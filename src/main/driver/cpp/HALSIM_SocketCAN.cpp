@@ -5,6 +5,7 @@
 #include "hal/CAN.h"
 #include "hal/simulation/CanData.h"
 #include "hal/Errors.h"
+#include "hal/HALBase.h"
 #include <cstring>
 #include <unordered_map>
 #include <mutex>
@@ -139,6 +140,7 @@ extern "C"
 {
     HALSIM_SocketCAN_Handle HALSIM_SocketCAN_Enable(const char *name)
     {
+        if (HAL_GetRuntimeType() != HAL_Runtime_Simulation) return nullptr;
         auto controller = new HALSIM_SocketCAN{};
         if (controller->controller.start(name) < 0)
         {
@@ -158,6 +160,7 @@ extern "C"
     }
     void HALSIM_SocketCAN_Clean(HALSIM_SocketCAN_Handle handle)
     {
+        if (HAL_GetRuntimeType() != HAL_Runtime_Simulation) return;
         HALSIM_SocketCAN* controller = static_cast<HALSIM_SocketCAN *>(handle);
         HALSIM_CancelCanGetCANStatusCallback(controller->canStatusCallback);
         HALSIM_CancelCanReceiveMessageCallback(controller->receiveMessageHandle);

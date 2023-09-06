@@ -1,33 +1,29 @@
-# WPILib Vendor Template
+# HALSIM_SocketCAN
 
-<<<<<<< HEAD
-This is the base WPILib vendor template for 2020. Much of the customizability has been removed for 2020, as it was rarely used, and its easier to just modify the existing one.
-=======
-This is the base WPILib vendor template for 2023.
->>>>>>> de5bc7320b586f11b6a37ce6016d1f63c3a7fee0
+This binds SocketCAN listeners to HALSIM CAN functions. As SocketCAN is Linux only, this vendordep only functions on Linux platforms that are in simulation mode.
+Supports both Java and C++.
 
-## Layout
+Applications:
+ * Hardware attached integration testing with CAN devices
+ * using WPILib on something that's not a roboRIO
+ * using real CAN with a Romi or something similar (may require additional work)
 
-The build is split into 3 libraries. A java library is built. This has access to all of wpilib, and also can JNI load the driver library.
 
-A driver library is built. This should contain all low level code you want to access from both C++, Java and any other text based language. This will not work with LabVIEW. This library has access to the WPILib HAL and wpiutil. This library can only export C symbols. It cannot export C++ symbols at all, and all C symbols must be explicitly listed in the symbols.txt file in the driver folder. JNI symbols must be listed in this file as well. This library however can be written in C++. If you attempt to change this library to have access to all of wpilib, you will break JNI access and it will no longer work.
+# Building/Installing
 
-A native C++ library is built. This has access to all of wpilib, and access to the driver library. This should implment the standard wpilib interfaces.
+1. copy [HALSIM_SocketCAN.json](HALSIM_SocketCAN.json) to your project's vendordep json folder
 
-## Customizing
-For Java, the library name will be the folder name the build is started from, so rename the folder to the name of your choosing. 
+2. run
+```bash
+# Feel free to change 2023 to the correct year
+./gradlew publishToMavenLocal && cp -r ~/.m2/repository/halsim ~/wpilib/2023/maven
+```
+in this repo
 
-For the native impl, you need to change the library name in the exportsConfigs block of build.gradle, the components block of build.gradle, and the taskList input array name in publish.gradle.
+Eventually there will be a proper maven sever...hopefully.
 
-For the driver, change the library name in privateExportsConfigs, the driver name in components, and the driverTaskList input array name. In addition, you'll need to change the `lib library` in the native C++ impl component, and the JNI library name in the JNI java class.
 
-For the maven artifact names, those are all in publish.gradle about 40 lines down.
-
-## Building and editing
-<<<<<<< HEAD
-This uses gradle, and uses the same base setup as a standard GradleRIO robot project. This means you build with `./gradlew build`, and can install the native toolchain with `./gradlew installRoboRIOToolchain`. If you open this project in VS Code with the wpilib extension installed, you will get intellisense set up for both C++ and Java.
-=======
+## Building and editing this vendordep
 This uses gradle, and uses the same base setup as a standard GradleRIO robot project. This means you build with `./gradlew build`, and can install the native toolchain with `./gradlew installRoboRIOToolchain`. If you open this project in VS Code with the wpilib extension installed, you will get intellisense set up for both C++ and Java.
 
 By default, this template builds against the latest WPILib development build. To build against the last WPILib tagged release, build with `./gradlew build -PreleaseMode`.
->>>>>>> de5bc7320b586f11b6a37ce6016d1f63c3a7fee0

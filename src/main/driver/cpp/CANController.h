@@ -1,5 +1,5 @@
 #pragma once
-
+#ifdef __linux__
 #include <thread>
 #include <atomic>
 #include <optional>
@@ -45,3 +45,4 @@ private:
   std::vector<CANData> m_dataMap;
 
 };
+#endif

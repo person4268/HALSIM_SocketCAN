@@ -1,3 +1,4 @@
+#ifdef __linux__
 #include "CANController.h"
 #include <stdio.h>
 #include <string.h>
@@ -115,7 +116,7 @@ void CANController::putData(const CANData& data) {
     frame.can_id |= CAN_EFF_FLAG;
     frame.can_dlc = data.length;
 
-    write(m_socket, &frame, sizeof(struct can_frame));
+    ssize_t res = write(m_socket, &frame, sizeof(struct can_frame));
 
     m_totalBits += can_frame_length((struct canfd_frame*)&frame,
                       CFL_WORSTCASE, sizeof(frame));
@@ -201,3 +202,4 @@ void CANController::utilThreadMain() {
     std::this_thread::sleep_for(std::chrono::seconds(1));
   }
 }
+#endif

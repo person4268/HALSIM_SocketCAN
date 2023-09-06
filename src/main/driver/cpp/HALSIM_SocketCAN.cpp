@@ -1,3 +1,4 @@
+#ifdef __linux__
 #include "HALSIM_SocketCAN.h"
 
 #include "CANController.h"
@@ -172,3 +173,4 @@ extern "C"
         delete controller;
     }
 }
+#endif

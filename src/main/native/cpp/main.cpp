@@ -9,7 +9,7 @@ __declspec(dllexport)
     int HALSIM_InitExtension(void) {
   std::puts("SocketCAN Initializing.");
 
-  HALSIM_SocketCAN_Handle handle = HALSIM_SocketCAN_Enable("vcan0");
+  HALSIM_SocketCAN_Enable("vcan0");
 
   std::puts("SocketCAN Initialized!");
   return 0;

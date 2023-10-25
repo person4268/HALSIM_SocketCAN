@@ -1,5 +1,7 @@
 #include <hal/Extensions.h>
 #include "HALSIM_SocketCAN.h"
+#include <cstdio>
+
 extern "C" {
 #if defined(WIN32) || defined(_WIN32)
 __declspec(dllexport)
@@ -8,7 +10,6 @@ __declspec(dllexport)
   std::puts("SocketCAN Initializing.");
 
   HALSIM_SocketCAN_Handle handle = HALSIM_SocketCAN_Enable("vcan0");
-  HAL_OnShutdown(nullptr, [handle](void*) { HALSIM_SocketCAN_Clean(handle); });
 
   std::puts("SocketCAN Initialized!");
   return 0;

@@ -160,7 +160,7 @@ extern "C"
     }
     void HALSIM_SocketCAN_Clean(HALSIM_SocketCAN_Handle handle)
     {
-        if (HAL_GetRuntimeType() != HAL_Runtime_Simulation) return;
+        //if (HAL_GetRuntimeType() != HAL_Runtime_Simulation) return;
         HALSIM_SocketCAN* controller = static_cast<HALSIM_SocketCAN *>(handle);
         HALSIM_CancelCanGetCANStatusCallback(controller->canStatusCallback);
         HALSIM_CancelCanReceiveMessageCallback(controller->receiveMessageHandle);

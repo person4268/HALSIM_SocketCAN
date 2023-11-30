@@ -140,7 +140,7 @@ extern "C"
 {
     HALSIM_SocketCAN_Handle HALSIM_SocketCAN_Enable(const char *name)
     {
-        if (HAL_GetRuntimeType() != HAL_Runtime_Simulation) return nullptr;
+        // if (HAL_GetRuntimeType() != HAL_Runtime_Simulation) return nullptr;
         auto controller = new HALSIM_SocketCAN{};
         if (controller->controller.start(name) < 0)
         {

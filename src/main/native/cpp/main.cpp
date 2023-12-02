@@ -1,3 +1,4 @@
+#include <hal/CAN.h>
 #include <hal/DriverStation.h>
 #include <hal/Extensions.h>
 #include <hal/SimDevice.h>

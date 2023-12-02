@@ -1,4 +1,6 @@
+#include <hal/DriverStation.h>
 #include <hal/Extensions.h>
+#include <hal/SimDevice.h>
 #include "HALSIM_SocketCAN.h"
 #include <wpinet/EventLoopRunner.h>
 #include <wpinet/uv/Timer.h>
@@ -36,6 +38,7 @@ __declspec(dllexport)
   } else {
     eventLoopRunner = std::make_unique<wpi::EventLoopRunner>();
     eventLoopRunner->ExecAsync(SetupEventLoop);
+    HAL_DisableSimDeviceCreation(true);
     std::puts("SocketCAN Initialized!");
   }
   return 0;

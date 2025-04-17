@@ -30,4 +30,10 @@ sudo ip link set can0 type can bitrate 1000000 && sudo ip link set can0 up
 ```
 to provision ``can0``
 
+Or use `vcan.sh` to setup a virtual can bus.
+
+## Running with custom halsim extensions
+```bash
+HALSIM_EXTENSIONS=${ROBOT_CODE_PATH}/build/jni/release/libhalsim_gui.so:${HALSIM_SOCKETCAN_PATH}/build/libhalsim_socketcan.so LD_LIBRARY_PATH=${ROBOT_CODE_PATH}/build/jni/release SOCKETCAN_INTERFACE=vcan0 ~/wpilib/2025/jdk/bin/java -jar build/libs/2025Robot.jar
 ```
+replacing env vars and names as needed

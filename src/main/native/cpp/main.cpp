@@ -32,7 +32,12 @@ __declspec(dllexport)
     int HALSIM_InitExtension(void) {
   std::puts("SocketCAN Initializing.");
 
-  HALSIM_SocketCAN_Handle handle = HALSIM_SocketCAN_Enable(std::getenv("SOCKETCAN_INTERFACE"));
+  char* iface = std::getenv("SOCKETCAN_INTERFACE");
+  if (iface == nullptr) {
+    std::puts("SOCKETCAN_INTERFACE not set");
+    return 0;
+  }
+  HALSIM_SocketCAN_Handle handle = HALSIM_SocketCAN_Enable(iface);
   if (handle == nullptr) {
     std::puts("Failed to initialize SocketCAN");
   } else {

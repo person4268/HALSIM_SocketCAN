@@ -1,6 +1,6 @@
 # HALSIM_SocketCAN
 
-This binds SocketCAN listeners to HALSIM CAN functions. As SocketCAN is Linux only, this vendordep only functions on Linux platforms that are in simulation mode.
+This binds SocketCAN listeners to HALSIM CAN functions. As SocketCAN is Linux only, this halsim extension only functions on Linux platforms that are in simulation mode.
 Supports both Java and C++.
 
 Applications:
@@ -11,16 +11,15 @@ Applications:
 
 # Building/Installing
 
-1. copy [HALSIM_SocketCAN.json](HALSIM_SocketCAN.json) to your project's vendordep json folder
+1. Clone https://github.com/wpilibsuite/allwpilib
 
 2. run
 ```bash
-# Feel free to change 2023 to the correct year
-./gradlew publishToMavenLocal && cp -r ~/.m2/repository/halsim ~/wpilib/2023/maven
+mkdir build && cd build && cmake .. -DWPILIB_DIR=../path/to/wpilib/clone && make -j
 ```
 in this repo
 
-Eventually there will be a proper maven sever...hopefully.
+3. Add libhalsim_socketcan.so to HALSIM_EXTENSIONS when simulating.
 
 # General running tips
 
@@ -31,38 +30,4 @@ sudo ip link set can0 type can bitrate 1000000 && sudo ip link set can0 up
 ```
 to provision ``can0``
 
-# Running in C++
-
-Assuming the SocketCAN interface is ``can0`` -- consult your local ``ip link`` to be sure.
-
-```cpp
-#include <HALSIM_SocketCAN.h>
-
-int main() {
-  // make sure that CAN-using objects are not instantiated first via static fields
-  HAL_Initialize(500, 0);
-  HALSIM_SocketCAN_Enable("can0");
-  return frc::StartRobot<Robot>();
-}
 ```
-
-# Running in Java
-```java
-import halsim.socketcan.HALSIM_SocketCAN;
-
-// edit your Main.java as such:
-
-public static void main(String... args) {
-if (!HAL.initialize(500, 0)) {
-    throw new IllegalStateException("Failed to initialize. Terminating");
-}
-HALSIM_SocketCAN.enable("can0");
-RobotBase.startRobot(Robot::new);
-}
-```
-
-
-## Building and editing this vendordep
-This uses gradle, and uses the same base setup as a standard GradleRIO robot project. This means you build with `./gradlew build`, and can install the native toolchain with `./gradlew installRoboRIOToolchain`. If you open this project in VS Code with the wpilib extension installed, you will get intellisense set up for both C++ and Java.
-
-By default, this template builds against the latest WPILib development build. To build against the last WPILib tagged release, build with `./gradlew build -PreleaseMode`.

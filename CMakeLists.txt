@@ -1,6 +1,9 @@
 project(halsim_socketcan)
 
-include(CompileWarnings)
+cmake_minimum_required(VERSION 3.21)
+set(CMAKE_SKIP_BUILD_RPATH true)
+
+add_subdirectory(${WPILIB_DIR} ${CMAKE_BINARY_DIR}/allwpilib EXCLUDE_FROM_ALL)
 
 file(GLOB halsim_socketcan_src src/main/native/cpp/*.cpp)
 
